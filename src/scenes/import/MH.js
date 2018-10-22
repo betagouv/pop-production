@@ -57,16 +57,28 @@ function parseFiles(files, encoding) {
           obj.REF = ref.id;
         }
 
+        let newNotice;
         if (obj.REF.indexOf("PM") !== -1) {
-          importedNotices.push(new Palissy(obj));
+          newNotice = new Palissy(obj);
         } else if (obj.REF.indexOf("PA") !== -1) {
-          importedNotices.push(new Merimee(obj));
+          newNotice = new Merimee(obj);
         } else {
           reject(`La référence ${obj.REF} n'est ni palissy, ni mérimée`);
           return;
         }
-      }
 
+        if (!newNotice.INSEE || newNotice.INSEE.value) {
+          newNotice._errors.push("INSEE ne doit pas être vide");
+        }
+        if (!newNotice.INSEE ||newNotice.DPT.value) {
+          newNotice._errors.push("DPT ne doit pas être vide");
+        }
+        if (!(newNotice.INSEE.value + "").startsWith(newNotice.DPT.value + "")) {
+          newNotice._errors.push("INSEE et Département ne coincident pas");
+        }
+        console.log("newNotice", newNotice);
+        importedNotices.push(newNotice);
+      }
       resolve({ importedNotices, fileNames: [objectFile.name] });
     });
   });

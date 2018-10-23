@@ -67,16 +67,17 @@ function parseFiles(files, encoding) {
           return;
         }
 
-        if (!newNotice.INSEE || newNotice.INSEE.value) {
+        if (!newNotice.INSEE || !newNotice.INSEE.value) {
           newNotice._errors.push("INSEE ne doit pas être vide");
         }
-        if (!newNotice.INSEE ||newNotice.DPT.value) {
+        if (!newNotice.INSEE || !newNotice.DPT.value) {
           newNotice._errors.push("DPT ne doit pas être vide");
         }
-        if (!(newNotice.INSEE.value + "").startsWith(newNotice.DPT.value + "")) {
+        if (
+          !String(newNotice.INSEE.value).startsWith(String(newNotice.DPT.value))
+        ) {
           newNotice._errors.push("INSEE et Département ne coincident pas");
         }
-        console.log("newNotice", newNotice);
         importedNotices.push(newNotice);
       }
       resolve({ importedNotices, fileNames: [objectFile.name] });

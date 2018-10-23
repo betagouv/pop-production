@@ -70,7 +70,7 @@ function parseFiles(files, encoding) {
         if (!newNotice.INSEE || !newNotice.INSEE.value) {
           newNotice._errors.push("INSEE ne doit pas être vide");
         }
-        if (!newNotice.INSEE || !newNotice.DPT.value) {
+        if (!newNotice.DPT || !newNotice.DPT.value) {
           newNotice._errors.push("DPT ne doit pas être vide");
         }
         if (

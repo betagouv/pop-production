@@ -38,7 +38,10 @@ export default class Search extends React.Component {
             <QueryBuilder entity={Mnr} componentId="advancedSearch" />
           </Col>
           <Col md={3}>
-            <ExportComponent FILTER={FILTER} filename="mnr.csv" />
+            <ExportComponent
+              FILTER={["advancedSearch"]}
+              filename="mnr.csv"
+            />
           </Col>
         </Row>
 

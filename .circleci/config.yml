@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:10.13
+      - image: circleci/node:8.10
     working_directory: ~/repo
     steps:
       - checkout
@@ -45,12 +45,20 @@ jobs:
     docker:
         - image: circleci/python:2.7-jessie
     steps:
+        - checkout
         - attach_workspace:
             # Must be absolute path or relative path from working_directory
             at: ~/repo
         - run:
             name: Install awscli
             command: sudo pip install awsebcli
+        - run:
+            name: AWS credentials
+            command: |
+              mkdir ~/.aws
+              echo "[eb-cli]" > ~/.aws/credentials
+              echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+              echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
         - run: eb deploy pop-production-staging
 
 workflows:

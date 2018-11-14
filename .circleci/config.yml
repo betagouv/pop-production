@@ -16,7 +16,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
-  build:
+  build-staging:
     working_directory: ~/repo
     docker:
         - image: circleci/node:8.10
@@ -40,7 +40,7 @@ jobs:
             root: ~/repo
             paths:
                 - build
-  deploy-eb:
+  deploy-eb-staging:
     working_directory: ~/repo
     docker:
         - image: circleci/python:2.7-jessie
@@ -52,51 +52,21 @@ jobs:
             name: Install awscli
             command: sudo pip install awsebcli
         - run: eb deploy pop-production-staging
-  deploy-staging:
-    docker:
-      - image: circleci/node:10.13
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Install awscli
-          command: |
-            sudo apt-get update
-            sudo apt-get -y -qq install nasm python-dev libpng-dev python-pip build-essential libpython-dev
-            pip install awsebcli --upgrade --user
-      - run: 
-          name: Build
-          command: yarn && yarn build:staging
-      - run:
-          name: AWS credentials
-          command: |
-            mkdir ~/.aws
-            echo "[eb-cli]" > ~/.aws/credentials
-            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
-            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-      - run:
-          name: Deploy
-          command: ~/.local/bin/eb deploy pop-production-staging
+
 workflows:
   version: 2
   test-then-deploy:
     jobs:
       - test
-      - build:
+      - build-staging:
           requires:
             - test
           filters:
             branches:
               only: master
-      - deploy-eb:
+      - deploy-eb-staging:
           requires:
             - build
           filters:
             branches:
               only: master
-      # - deploy-staging:
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         only: master

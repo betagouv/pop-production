@@ -43,6 +43,12 @@ class Signin extends Component {
             value={this.state.password}
             onChange={e => this.setState({ password: e.target.value })}
           />
+          <div className="cgu">
+            En cliquant sur "se connecter", vous acceptez les{" "}
+            <a href="https://s3.eu-west-3.amazonaws.com/pop-general/cgu/cgu.pdf">
+              CGU
+            </a>
+          </div>
           <Link
             style={{ textDecoration: "none" }}
             to="/auth/forget"

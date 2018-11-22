@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Container } from "reactstrap";
 
 import "./home.css";
 
@@ -24,38 +24,40 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <div className="home-search">
-        <div className="subtitle">Je souhaite consulter la base</div>
-        <Row>
-          {this.renderTiles([
-            {
-              url: "/recherche/joconde",
-              name: "Joconde",
-              image: require("../../assets/joconde.jpg")
-            },
-            {
-              url: "/recherche/merimee",
-              name: "Mérimée",
-              image: require("../../assets/merimee.jpg")
-            },
-            {
-              url: "/recherche/palissy",
-              name: "Palissy",
-              image: require("../../assets/palissy.jpg")
-            },
-            {
-              url: "/recherche/memoire",
-              name: "Mémoire",
-              image: require("../../assets/memoire.jpg")
-            },
-            {
-              url: "/recherche/mnr",
-              name: "MNR",
-              image: require("../../assets/MNR.jpg")
-            }
-          ])}
-        </Row>
-      </div>
+      <Container fluid>
+        <div className="home-search">
+          <div className="subtitle">Je souhaite consulter la base</div>
+          <Row>
+            {this.renderTiles([
+              {
+                url: "/recherche/joconde",
+                name: "Joconde",
+                image: require("../../assets/joconde.jpg")
+              },
+              {
+                url: "/recherche/merimee",
+                name: "Mérimée",
+                image: require("../../assets/merimee.jpg")
+              },
+              {
+                url: "/recherche/palissy",
+                name: "Palissy",
+                image: require("../../assets/palissy.jpg")
+              },
+              {
+                url: "/recherche/memoire",
+                name: "Mémoire",
+                image: require("../../assets/memoire.jpg")
+              },
+              {
+                url: "/recherche/mnr",
+                name: "MNR",
+                image: require("../../assets/MNR.jpg")
+              }
+            ])}
+          </Row>
+        </div>
+      </Container>
     );
   }
 }

@@ -6,7 +6,15 @@ import Actions from "../../redux/auth/actions";
 const { signin } = Actions;
 
 class Signin extends Component {
-  state = { email: "", password: "", error: "", cgu: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      error: "",
+      cgu: localStorage.getItem("cgu") || false
+    };
+  }
 
   loginWithEmail() {
     this.props.signin(this.state.email, this.state.password);

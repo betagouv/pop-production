@@ -13,19 +13,34 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
     // { value: "<>", text: "exist" },
     return {
       bool: {
+        // Must exists ...
         must: { exists: { field: valueSelected } },
+        // ... and must be not empty.
         must_not: { term: toKeywordObject(valueSelected, "") }
       }
     };
   } else if (actionSelected === "><") {
     // { value: "><", text: "n'existe pas" }
-    return { term: toKeywordObject(valueSelected, "") };
+    return {
+      bool: {
+        // Should be ...
+        should: [
+          // ... empty string ... 
+          { term: toKeywordObject(valueSelected, "") },
+          // ... or not exists.
+          { bool: { must_not: { exists: { field: valueSelected } } } }
+        ]
+      }
+    };
+    // return { term: toKeywordObject(valueSelected, "") };
   } else if (actionSelected === "==" && resultSelected) {
     // { value: "==", text: "égal à" },
     return { term: toKeywordObject(valueSelected, resultSelected) };
   } else if (actionSelected === "!=" && resultSelected) {
     // { value: "!=", text: "différent de" },
-    return { must_not: { term: toKeywordObject(valueSelected, resultSelected) } };
+    return {
+      must_not: { term: toKeywordObject(valueSelected, resultSelected) }
+    };
   } else if (actionSelected === ">=" && resultSelected) {
     // { value: ">=", text: "supérieur ou égal à" },
     return { range: toKeywordObject(valueSelected, { gte: resultSelected }) };
@@ -34,16 +49,16 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
     return { range: toKeywordObject(valueSelected, { lte: resultSelected }) };
   } else if (actionSelected === "<" && resultSelected) {
     // { value: "<", text: "strictement inférieur à" },
-    return { range: toKeywordObject(valueSelected, { lt: resultSelected })  };
+    return { range: toKeywordObject(valueSelected, { lt: resultSelected }) };
   } else if (actionSelected === ">" && resultSelected) {
     // { value: ">", text: "strictement supérieur à" },
-    return { range: toKeywordObject(valueSelected, { gt: resultSelected })  };
+    return { range: toKeywordObject(valueSelected, { gt: resultSelected }) };
   } else if (actionSelected === "^" && resultSelected) {
     // { value: "^", text: "commence par" }
-    return { wildcard: toKeywordObject(valueSelected, `${resultSelected}*`)  };
+    return { wildcard: toKeywordObject(valueSelected, `${resultSelected}*`) };
   } else if (actionSelected === "*" && resultSelected) {
     // { value: "*", text: "contient" }
-    return { wildcard: toKeywordObject(valueSelected, `*${resultSelected}*`)  };
+    return { wildcard: toKeywordObject(valueSelected, `*${resultSelected}*`) };
   } else {
     return null;
   }

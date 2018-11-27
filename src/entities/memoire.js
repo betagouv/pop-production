@@ -35,6 +35,7 @@ export default class Memoire extends Notice {
     this.setProperty("DATIMM", "String", body.DATIMM);
     this.setProperty("DATOEU", "String", body.DATOEU);
     this.setProperty("DATOR", "String", body.DATOR);
+    this.setProperty("EXPO", "String", body.EXPO);
     this.setProperty("DATPV", "String", body.DATPV);
     this.setProperty("DATTI", "String", body.DATTI);
     this.setProperty("DIFF", "String", body.DIFF);

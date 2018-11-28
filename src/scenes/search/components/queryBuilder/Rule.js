@@ -2,12 +2,6 @@ import React from "react";
 import Autocomplete from "react-autocomplete";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 
-const toKeywordObject = (k, v) => {
-  const obj = {};
-  obj[`${k}.keyword`] = v;
-  return obj;
-};
-
 function getQuery(valueSelected, actionSelected, resultSelected) {
   if (actionSelected === "<>") {
     // { value: "<>", text: "exist" },
@@ -16,7 +10,7 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
         // Must exists ...
         must: { exists: { field: valueSelected } },
         // ... and must be not empty.
-        must_not: { term: toKeywordObject(valueSelected, "") }
+        must_not: { term: { [`${valueSelected}.keyword`]: "" } }
       }
     };
   } else if (actionSelected === "><") {
@@ -25,8 +19,8 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
       bool: {
         // Should be ...
         should: [
-          // ... empty string ... 
-          { term: toKeywordObject(valueSelected, "") },
+          // ... empty string ...
+          { term: { [`${valueSelected}.keyword`]: "" } },
           // ... or not exists.
           { bool: { must_not: { exists: { field: valueSelected } } } }
         ]
@@ -35,30 +29,32 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
     // return { term: toKeywordObject(valueSelected, "") };
   } else if (actionSelected === "==" && resultSelected) {
     // { value: "==", text: "égal à" },
-    return { term: toKeywordObject(valueSelected, resultSelected) };
+    return { term: { [`${valueSelected}.keyword`]: resultSelected } };
   } else if (actionSelected === "!=" && resultSelected) {
     // { value: "!=", text: "différent de" },
     return {
-      must_not: { term: toKeywordObject(valueSelected, resultSelected) }
+      must_not: { term: { [`${valueSelected}.keyword`]: resultSelected } }
     };
   } else if (actionSelected === ">=" && resultSelected) {
     // { value: ">=", text: "supérieur ou égal à" },
-    return { range: toKeywordObject(valueSelected, { gte: resultSelected }) };
+    return { range: { [`${valueSelected}.keyword`]: { gte: resultSelected } } };
   } else if (actionSelected === "<=" && resultSelected) {
     // { value: "<=", text: "inférieur ou égal à" },
-    return { range: toKeywordObject(valueSelected, { lte: resultSelected }) };
+    return { range: { [`${valueSelected}.keyword`]: { lte: resultSelected } } };
   } else if (actionSelected === "<" && resultSelected) {
     // { value: "<", text: "strictement inférieur à" },
-    return { range: toKeywordObject(valueSelected, { lt: resultSelected }) };
+    return { range: { [`${valueSelected}.keyword`]: { lt: resultSelected } } };
   } else if (actionSelected === ">" && resultSelected) {
     // { value: ">", text: "strictement supérieur à" },
-    return { range: toKeywordObject(valueSelected, { gt: resultSelected }) };
+    return { range: { [`${valueSelected}.keyword`]: { gt: resultSelected } } };
   } else if (actionSelected === "^" && resultSelected) {
     // { value: "^", text: "commence par" }
-    return { wildcard: toKeywordObject(valueSelected, `${resultSelected}*`) };
+    return { wildcard: { [`${valueSelected}.keyword`]: `${resultSelected}*` } };
   } else if (actionSelected === "*" && resultSelected) {
     // { value: "*", text: "contient" }
-    return { wildcard: toKeywordObject(valueSelected, `*${resultSelected}*`) };
+    return {
+      wildcard: { [`${valueSelected}.keyword`]: `*${resultSelected}*` }
+    };
   } else {
     return null;
   }

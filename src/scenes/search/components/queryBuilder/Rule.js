@@ -26,7 +26,6 @@ function getQuery(valueSelected, actionSelected, resultSelected) {
         ]
       }
     };
-    // return { term: toKeywordObject(valueSelected, "") };
   } else if (actionSelected === "==" && resultSelected) {
     // { value: "==", text: "égal à" },
     return { term: { [`${valueSelected}.keyword`]: resultSelected } };

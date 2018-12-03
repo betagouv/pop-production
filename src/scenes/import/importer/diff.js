@@ -34,7 +34,7 @@ function compare(importedObject, existed) {
   return differences;
 }
 
-export default function diff(importedNotices, existingNotices) {
+export default function checkDiff(importedNotices, existingNotices) {
   for (var i = 0; i < importedNotices.length; i++) {
     let found = false;
     for (var j = 0; j < existingNotices.length; j++) {

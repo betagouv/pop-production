@@ -1,4 +1,4 @@
-var diff = require("deep-diff").diff;
+const diff = require("deep-diff").diff;
 
 function compare(importedObject, existed) {
   //make the imported object flat
@@ -33,24 +33,6 @@ function compare(importedObject, existed) {
   const differences = d.map(e => e.path[0]);
   return differences;
 }
-
-// function addZero(number, numberofzero) {
-//   const add = numberofzero - number.toString().length;
-//   let hey = number.toString();
-//   for (var i = 0; i < add; i++) {
-//     hey = "0" + hey;
-//   }
-//   return hey;
-// }
-
-// function isInt(value) {
-//   return (
-//     !isNaN(value) &&
-//     (function(x) {
-//       return (x | 0) === x;
-//     })(parseFloat(value))
-//   );
-// }
 
 export default function diff(importedNotices, existingNotices) {
   for (var i = 0; i < importedNotices.length; i++) {

@@ -483,22 +483,22 @@ class Notice extends React.Component {
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour
           </div>
-          {this.props.canDelete ? (
-            <div className="buttons">
+          <div className="buttons">
+            {this.props.canDelete ? (
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
-              <Button
-                disabled={!this.state.editable}
-                color="primary"
-                type="submit"
-              >
-                Sauvegarder
-              </Button>
-            </div>
-          ) : (
-            <div />
-          )}
+            ) : (
+              <div />
+            )}
+            <Button
+              disabled={!this.state.editable}
+              color="primary"
+              type="submit"
+            >
+              Sauvegarder
+            </Button>
+          </div>
         </Form>
       </Container>
     );

@@ -174,9 +174,9 @@ class UpdateProfile extends Component {
   };
 
   renderRoles = () => {
-    const { group, role } = this.state;
+    const { role } = this.state;
     let roles = [];
-    if (role === "administrateur" || group === "admin") {
+    if (role === "administrateur") {
       roles = roles.concat(["utilisateur", "producteur", "administrateur"]);
     }
 
@@ -265,7 +265,7 @@ class UpdateProfile extends Component {
                 {this.renderGroups()}
               </Input>
             ) : null}
-            {role === "administrateur" || group === "admin" ? (
+            {role === "administrateur" ? (
               <Input
                 type="select"
                 value={role}

@@ -51,7 +51,7 @@ class CreateUser extends React.Component {
   renderModal() {
     let groups = [];
 
-    if (this.props.group === "admin") {
+    if (this.props.role === "administrateur" && this.props.group === "admin") {
       groups = groups.concat([
         "admin",
         "mnr",
@@ -66,7 +66,7 @@ class CreateUser extends React.Component {
     groups = groups.map(e => <option key={e}>{e}</option>);
 
     let roles = [];
-    if (this.props.role === "administrateur" || this.props.group === "admin") {
+    if (this.props.role === "administrateur") {
       roles = roles.concat(["administrateur", "producteur", "utilisateur"]);
     }
 

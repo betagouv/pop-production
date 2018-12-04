@@ -89,7 +89,7 @@ class UpdateUser extends React.Component {
         "memoire"
       ]);
     } else {
-      groups.push(this.props.group);
+      groups.push(this.props.authUserGroup);
     }
     groups = groups.map(e => <option key={e}>{e}</option>);
 

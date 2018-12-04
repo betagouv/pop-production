@@ -3,6 +3,7 @@ import { Table } from "reactstrap";
 import CreateUser from "./createUser";
 import UpdateUser from "./UpdateUser";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import api from "../../services/api";
 
 import "./index.css";
@@ -61,6 +62,9 @@ class Admin extends React.Component {
   }
 
   render() {
+    if (this.props.role !== "administrateur") {
+      return <Redirect to="/recherche" />;
+    }
     return (
       <div className="admin">
         <CreateUser />
@@ -72,7 +76,8 @@ class Admin extends React.Component {
 
 const mapStateToProps = ({ Auth }) => {
   return {
-    group: Auth.user ? Auth.user.group : ""
+    group: Auth.user ? Auth.user.group : "",
+    role: Auth.user ? Auth.user.role : ""
   };
 };
 

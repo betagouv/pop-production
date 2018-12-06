@@ -32,8 +32,6 @@ function parseFiles(files, encoding) {
       const notices = [];
       for (let i = 0; i < data.length; i++) {
         notices.push(new Memoire(data[i]));
-
-        console.log("notices", notices);
       }
       const filesMap = {};
       for (var i = 0; i < files.length; i++) {

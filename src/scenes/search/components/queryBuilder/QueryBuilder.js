@@ -4,14 +4,15 @@ import RuleGroup from "./RuleGroup";
 import "./QueryBuilder.css";
 
 export default class QueryBuilder extends React.Component {
-  onUpdate(q) {
-    if (!q) {
-      this.props.setQuery({ query: {}, value: "hey" }); // ???
+  onUpdate({ obj, url }) {
+    if (!obj) {
+      this.props.setQuery({ query: {}, value: url }); // ???
       return;
     }
-    const query = { bool: { ...q } };
-    console.log("Set query", JSON.stringify(query));
-    this.props.setQuery({ query, value: "hey" }); // ???
+    const query = { bool: { ...obj } };
+
+    console.log("url", url);
+    this.props.setQuery({ query, value: url }); // ???
   }
 
   render() {

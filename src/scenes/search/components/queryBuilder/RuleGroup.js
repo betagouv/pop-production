@@ -9,6 +9,38 @@ function getQuery(q) {
     should: [],
     should_not: []
   };
+
+  console.log("YOOO", q);
+
+  const arr = q.map((e, i) => {
+    if (!e.query) {
+      return "";
+    }
+    let str = "";
+    if (i) {
+      str += e.combinator;
+    }
+    str += "(";
+
+    if (e.query.term) {
+      const key = Object.keys(e.query.term)[0];
+      str += `${key.replace(".keyword", "")}=${e.query.term[key]}`;
+    } else if (e.query.must_not) {
+      const key = Object.keys(e.query.must_not.term)[0];
+      str += `${key.replace(".keyword", "")}!=${e.query.must_not.term[key]}`;
+    } else if (e.query.wildcard) {
+      const key = Object.keys(e.query.wildcard)[0];
+      str += `${key.replace(".keyword", "")}€${e.query.wildcard[key]}`;
+    }
+
+    str += ")";
+    return str;
+  });
+
+  const url = arr.join("");
+
+  //  // (REF=XXXX)OU(REF=EEEEE)OU()"
+
   for (let i = 0; i < q.length; i++) {
     //ALGO UN PEU CON ....
     let combinator = "ET";
@@ -29,7 +61,7 @@ function getQuery(q) {
     }
   }
 
-  return obj;
+  return { obj, url };
 }
 
 export default class RuleGroup extends React.Component {

@@ -14,6 +14,7 @@ export default class AdvancedSearch extends React.Component {
   render() {
     return (
       <ReactiveComponent
+        URLParams={true}
         componentId={this.props.componentId} // a unique id we will refer to later
       >
         <QueryBuilder

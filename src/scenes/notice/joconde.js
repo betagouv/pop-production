@@ -469,12 +469,12 @@ class Notice extends React.Component {
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="Date de mise a jour (DMAJ) :"
+                title="Date de mise à jour (DMAJ) :"
                 name="DMAJ"
                 disabled={!this.state.editable}
               />
               <FieldInput
-                title="Date de creation (DMIS) :"
+                title="Date de création (DMIS) :"
                 name="DMIS"
                 disabled={!this.state.editable}
               />

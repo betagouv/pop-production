@@ -12,7 +12,8 @@ import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 import QueryBuilder from "./components/queryBuilder";
 import { es_url, bucket_url } from "../../config.js";
-import Joconde from "../../entities/Joconde";
+
+import { joconde } from "../../entities/pop_mapping";
 
 const FILTER = [
   "mainSearch",
@@ -74,10 +75,12 @@ export default class Search extends React.Component {
     return (
       <div>
         <Row>
-          <Col md={9}>
-            <QueryBuilder entity={Joconde} componentId="advancedSearch" />
+          <Col md={12}>
+            <QueryBuilder entity={joconde} componentId="advancedSearch" />
           </Col>
-          <Col md={3}>
+        </Row>
+        <Row>
+          <Col md={12}>
             <ExportComponent FILTER={["advancedSearch"]} collection="joconde" />
           </Col>
         </Row>
@@ -87,7 +90,7 @@ export default class Search extends React.Component {
             className="ml-2"
             onChange={e => this.setState({ sortKey: e.target.value })}
           >
-            {new Joconde({})._fields
+            {Object.keys(joconde)
               .filter(e => !["TICO", "TITR"].includes(e))
               .map(e => (
                 <option key={e} value={e}>

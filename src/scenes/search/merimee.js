@@ -10,7 +10,7 @@ import {
 import { MultiList } from "pop-shared";
 import ExportComponent from "./components/export";
 
-import Merimee from "../../entities/Merimee";
+import { merimee } from "../../entities/pop_mapping";
 
 import QueryBuilder from "./components/queryBuilder";
 
@@ -45,13 +45,15 @@ export default class Search extends React.Component {
     return (
       <div>
         <Row>
-          <Col md={9}>
+          <Col md={12}>
             <QueryBuilder
-              entity={Merimee}
+              entity={merimee}
               componentId="advancedSearch"
               autocomplete={false}
             />
           </Col>
+        </Row>
+        <Row>
           <Col md={3}>
             <ExportComponent
               FILTER={["advancedSearch"]}
@@ -62,14 +64,22 @@ export default class Search extends React.Component {
         </Row>
         <div className="text-center my-3">
           Trier par :
-          <select className="ml-2" onChange={e => this.setState({ sortKey: e.target.value })}>
-            {new Merimee({})._fields.filter(e => !["TICO", "TITR"].includes(e)).map(e => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            ))}
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortKey: e.target.value })}
+          >
+            {Object.keys(merimee)
+              .filter(e => !["TICO", "TITR"].includes(e))
+              .map(e => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
           </select>
-          <select className="ml-2" onChange={e => this.setState({ sortOrder: e.target.value })}>
+          <select
+            className="ml-2"
+            onChange={e => this.setState({ sortOrder: e.target.value })}
+          >
             <option value="asc">Ascendant</option>
             <option value="desc">Descendant</option>
           </select>

@@ -15,7 +15,7 @@ import { MultiList } from "pop-shared";
 
 import ExportComponent from "./components/export";
 
-import Mnr from "../../entities/Mnr";
+import { mnr } from "../../entities/pop_mapping";
 
 import { es_url, bucket_url } from "../../config.js";
 
@@ -49,7 +49,7 @@ export default class Search extends React.Component {
       <div>
         <Row>
           <Col md={9}>
-            <QueryBuilder entity={Mnr} componentId="advancedSearch" />
+            <QueryBuilder entity={mnr} componentId="advancedSearch" />
           </Col>
           <Col md={3}>
             <ExportComponent FILTER={["advancedSearch"]} collection="mnr" />
@@ -61,8 +61,7 @@ export default class Search extends React.Component {
             className="ml-2"
             onChange={e => this.setState({ sortKey: e.target.value })}
           >
-            {new Mnr({})._fields
-              .filter(e => !["TICO", "TITR"].includes(e))
+            {Object.keys(mnr).filter(e => !["TICO", "TITR"].includes(e))
               .map(e => (
                 <option key={e} value={e}>
                   {e}

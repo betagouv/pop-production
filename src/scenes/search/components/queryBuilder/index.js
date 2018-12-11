@@ -1,13 +1,19 @@
 import React from "react";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 import QueryBuilder from "./QueryBuilder";
-
 export default class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props);
-    const object = new props.entity({});
+
+    const entity = props.entity;
+    //clean entity
+    delete entity._id;
+    delete entity.__v;
+    delete entity["POP_COORDONNEES.lat"];
+    delete entity["POP_COORDONNEES.lon"];
+
     this.state = {
-      properties: object._fields
+      entity
     };
   }
 
@@ -17,7 +23,7 @@ export default class AdvancedSearch extends React.Component {
         componentId={this.props.componentId} // a unique id we will refer to later
       >
         <QueryBuilder
-          fields={this.state.properties}
+          entity={this.state.entity}
           autocomplete={
             this.props.autocomplete === undefined
               ? true

@@ -11,6 +11,8 @@ export default class AdvancedSearch extends React.Component {
     delete entity.__v;
     delete entity["POP_COORDONNEES.lat"];
     delete entity["POP_COORDONNEES.lon"];
+    delete entity["POP_COORDINATES_POLYGON.type"];
+    delete entity["POP_COORDINATES_POLYGON.coordinates"];
 
     this.state = {
       entity

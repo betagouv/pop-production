@@ -7,10 +7,9 @@ import {
   ReactiveList,
   SelectedFilters
 } from "@appbaseio/reactivesearch";
-import { MultiList } from "pop-shared";
+import { MultiList, Mapping } from "pop-shared";
 import ExportComponent from "./components/export";
 import QueryBuilder from "./components/queryBuilder";
-import { palissy } from "../../entities/pop_mapping";
 import { es_url, bucket_url } from "../../config.js";
 
 const FILTER = [
@@ -40,7 +39,7 @@ export default class Search extends React.Component {
         <Row>
           <Col md={12}>
             <QueryBuilder
-              entity={palissy}
+              entity={Mapping.palissy}
               componentId="advancedSearch"
               autocomplete={false}
             />
@@ -57,7 +56,7 @@ export default class Search extends React.Component {
             className="ml-2"
             onChange={e => this.setState({ sortKey: e.target.value })}
           >
-            {Object.keys(palissy)
+            {Object.keys(Mapping.palissy)
               .filter(e => !["TICO", "TITR"].includes(e))
               .map(e => (
                 <option key={e} value={e}>

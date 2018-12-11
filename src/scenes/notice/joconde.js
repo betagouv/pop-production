@@ -1,9 +1,11 @@
 import React from "react";
-import { Row, Col, Container, Button, Form } from "reactstrap";
+import { Row, Col, Container, Button, Form, Tooltip } from "reactstrap";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { Mapping } from "pop-shared";
 
+import Field from "./components/field.js";
 import FieldInput from "./components/fieldInput.js";
 import FieldTags from "./components/fieldTags.js";
 import FieldImages from "./components/fieldImages";
@@ -119,16 +121,8 @@ class Notice extends React.Component {
             color="#FF7676"
           >
             <Col sm={6}>
-              <FieldInput
-                title="N°Inventaire, ancien(s) numéros(s), autres numéros, N° de dépôt (INV) :"
-                name="INV"
-                disabled={!this.state.editable}
-              />
-              <FieldTags
-                title="Domaine (catégorie du bien) (DOMN) :"
-                name="DOMN"
-                disabled={!this.state.editable}
-              />
+              <CustomField name="INV" disabled={!this.state.editable} />
+              <CustomField name="DOMN" disabled={!this.state.editable} />
               <FieldTags
                 title="Dénomination du bien (DENO) : "
                 name="DENO"
@@ -504,6 +498,10 @@ class Notice extends React.Component {
     );
   }
 }
+
+const CustomField = ({ name, ...rest }) => {
+  return <Field {...Mapping.joconde[name]} name={name} {...rest} />;
+};
 
 const mapStateToProps = ({ Auth }) => {
   const { role, group, museofile } = Auth.user;

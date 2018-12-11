@@ -7,13 +7,11 @@ import {
   ReactiveList,
   SelectedFilters
 } from "@appbaseio/reactivesearch/lib";
-import { MultiList } from "pop-shared";
+import { MultiList, Mapping } from "pop-shared";
 
 import ExportComponent from "./components/export";
 
 import QueryBuilder from "./components/queryBuilder";
-
-import { memoire } from "../../entities/pop_mapping";
 
 import { es_url, bucket_url } from "../../config.js";
 
@@ -46,7 +44,7 @@ export default class Search extends React.Component {
         <Row>
           <Col md={12}>
             <QueryBuilder
-              entity={memoire}
+              entity={Mapping.memoire}
               componentId="advancedSearch"
               autocomplete={false}
             />
@@ -63,7 +61,7 @@ export default class Search extends React.Component {
             className="ml-2"
             onChange={e => this.setState({ sortKey: e.target.value })}
           >
-            {Object.keys(memoire)
+            {Object.keys(Mapping.memoire)
               .filter(e => !["TICO", "TITR"].includes(e))
               .map(e => (
                 <option key={e} value={e}>

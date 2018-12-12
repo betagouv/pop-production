@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container, ButtonGroup, Button } from "reactstrap";
+import { Row, Col, Container } from "reactstrap";
 import { Link } from "react-router-dom";
 import {
   ReactiveBase,
@@ -33,7 +33,7 @@ export default class Search extends React.Component {
     super(props);
 
     this.state = {
-      normalMode: true,
+      normalMode: !props.expert,
       sortOrder: "asc",
       sortKey: "REF"
     };
@@ -215,31 +215,7 @@ export default class Search extends React.Component {
   render() {
     return (
       <Container className="search">
-        <div className="header">
-          <div className="title">Rechercher une Notice</div>
-          <div className="buttons">
-            <ButtonGroup>
-              <Button
-                color="primary"
-                onClick={() =>
-                  this.setState({ normalMode: !this.state.normalMode })
-                }
-                active={this.state.normalMode}
-              >
-                Recherche simple
-              </Button>
-              <Button
-                color="primary"
-                onClick={() =>
-                  this.setState({ normalMode: !this.state.normalMode })
-                }
-                active={!this.state.normalMode}
-              >
-                Recherche experte
-              </Button>
-            </ButtonGroup>
-          </div>
-        </div>
+        <Header base="memoire" normalMode={this.state.normalMode} />
         <ReactiveBase url={`${es_url}/memoire`} app="memoire">
           {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
         </ReactiveBase>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Button, ButtonGroup, Container } from "reactstrap";
+import { Row, Col, Container } from "reactstrap";
 import { Link } from "react-router-dom";
 import {
   ReactiveBase,
@@ -13,6 +13,7 @@ import ExportComponent from "./components/export";
 import QueryBuilder from "./components/queryBuilder";
 import { es_url, bucket_url } from "../../config.js";
 import Joconde from "../../entities/Joconde";
+import Header from "./components/Header"
 
 const FILTER = [
   "mainSearch",
@@ -29,7 +30,7 @@ export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      normalMode: true,
+      normalMode: !props.expert,
       sortOrder: "asc",
       sortKey: "REF"
     };
@@ -38,31 +39,7 @@ export default class Search extends React.Component {
   render() {
     return (
       <Container className="search">
-        <div className="header">
-          <div className="title">Rechercher une Notice</div>
-          <div className="buttons">
-            <ButtonGroup>
-              <Button
-                color="primary"
-                onClick={() =>
-                  this.setState({ normalMode: !this.state.normalMode })
-                }
-                active={this.state.normalMode}
-              >
-                Recherche simple
-              </Button>
-              <Button
-                color="primary"
-                onClick={() =>
-                  this.setState({ normalMode: !this.state.normalMode })
-                }
-                active={!this.state.normalMode}
-              >
-                Recherche experte
-              </Button>
-            </ButtonGroup>
-          </div>
-        </div>
+        <Header base="joconde" normalMode={this.state.normalMode} />
         <ReactiveBase url={`${es_url}/joconde`} app="joconde">
           {this.state.normalMode ? this.renderNormal() : this.renderAdvanced()}
         </ReactiveBase>

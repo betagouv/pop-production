@@ -50,7 +50,7 @@ class PublicRoutes extends React.Component {
               hasResetPassword={this.props.hasResetPassword}
             />
             <RestrictedRoute
-              path={"/recherche/"}
+              path={["/recherche/", "/recherche-avancee/"]}
               component={Search}
               isLoggedIn={this.props.isLoggedIn}
               hasResetPassword={this.props.hasResetPassword}

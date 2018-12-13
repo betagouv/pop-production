@@ -24,14 +24,16 @@ export default class Search extends React.Component {
         <ReactiveBase url={`${es_url}/memoire`} app="memoire">
           <div>
             <Row>
-              <Col md={9}>
+              <Col md={12}>
                 <QueryBuilder
                   entity={Mapping.memoire}
                   componentId="advancedSearch"
                   autocomplete={false}
                 />
               </Col>
-              <Col md={3}>
+            </Row>
+            <Row>
+              <Col md={12}>
                 <ExportComponent
                   FILTER={["advancedSearch"]}
                   collection="memoire"

@@ -11,7 +11,6 @@ import Card from "../components/MerimeeCard";
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       sortOrder: "asc",
       sortKey: "REF"

@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
-import QueryBuilder from "../components/QueryBuilder";
 import ExportComponent from "../components/export";
+import QueryBuilder from "../components/QueryBuilder";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import { Mapping } from "pop-shared";
@@ -11,7 +11,6 @@ import Card from "../components/MnrCard";
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       sortOrder: "asc",
       sortKey: "REF"

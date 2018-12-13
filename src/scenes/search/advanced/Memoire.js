@@ -3,7 +3,6 @@ import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch/lib";
 import ExportComponent from "../components/export";
 import QueryBuilder from "../components/QueryBuilder";
-import Memoire from "../../../entities/Memoire";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
 import { Mapping } from "pop-shared";
@@ -12,7 +11,6 @@ import Card from "../components/MemoireCard";
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       sortOrder: "asc",
       sortKey: "REF"

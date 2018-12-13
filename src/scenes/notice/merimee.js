@@ -5,7 +5,7 @@ import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
 import { Mapping } from "pop-shared";
 
-import CustomField from "./components/CustomField.js";
+import Field from "./components/field.js";
 import FieldLink from "./components/fieldLink.js";
 import FieldImages from "./components/fieldImages";
 import Section from "./components/section.js";

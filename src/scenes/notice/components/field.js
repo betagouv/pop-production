@@ -157,7 +157,6 @@ export default class AbstractField extends React.Component {
     tooltipOpen: false
   };
   render() {
-    console.log("this.props", this.props);
     const { label, type, name, description, ...rest } = this.props;
     let Comp = <div />;
     if (type === "String") {
@@ -209,8 +208,8 @@ const styles = {
     flexDirection: "column",
     justifyContent: "start",
     alignItems: "start",
-    paddingTop: "10px",
-    paddingBottom: "10px"
+    paddingTop: "0px",
+    paddingBottom: "0px"
   },
   title: {
     paddingRight: "15px",

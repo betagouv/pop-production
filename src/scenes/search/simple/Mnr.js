@@ -1,6 +1,5 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import { Link } from "react-router-dom";
 import {
   ReactiveBase,
   DataSearch,
@@ -10,8 +9,9 @@ import {
 } from "@appbaseio/reactivesearch";
 import { MultiList } from "pop-shared";
 import ExportComponent from "../components/export";
-import { es_url, bucket_url } from "../../../config.js";
+import { es_url } from "../../../config.js";
 import Header from "../components/Header";
+import Card from "../components/MnrCard";
 
 const FILTER = [
   "mainSearch",
@@ -228,31 +228,3 @@ export default class Search extends React.Component {
     );
   }
 }
-
-const Card = ({ data }) => {
-  const image = data.VIDEO.length
-    ? `${bucket_url}${data.VIDEO[0]}`
-    : require("../../../assets/noimage.jpg");
-  return (
-    <Link
-      style={{ textDecoration: "none" }}
-      to={`/notice/mnr/${data.REF}`}
-      className="card"
-      key={data.REF}
-    >
-      <img src={image} alt="Lien cassé" />
-      <div className="content">
-        <div style={{ display: "flex" }}>
-          <h2>{data.TITR}</h2>
-          <span>{data.INV}</span>
-        </div>
-        <div>
-          <p>{data.DOMN}</p>
-          <p>{data.DENO}</p>
-          <p>{data.LOCA}</p>
-          <p>{data.AUTR}</p>
-        </div>
-      </div>
-    </Link>
-  );
-};

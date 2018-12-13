@@ -1,12 +1,12 @@
 import React from "react";
 import { Row, Col, Container } from "reactstrap";
-import { Link } from "react-router-dom";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
 import QueryBuilder from "../components/QueryBuilder";
-import { es_url, bucket_url } from "../../../config.js";
+import { es_url } from "../../../config.js";
 import Joconde from "../../../entities/Joconde";
 import Header from "../components/Header";
+import Card from "../components/JocondeCard";
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -80,33 +80,3 @@ export default class Search extends React.Component {
     );
   }
 }
-
-const Card = ({ data }) => {
-  const image = data.IMG.length
-    ? `${bucket_url}${data.IMG[0]}`
-    : require("../../../assets/noimage.jpg");
-  return (
-    <Link
-      style={{ textDecoration: "none" }}
-      to={`/notice/joconde/${data.REF}`}
-      className="card"
-      key={data.REF}
-    >
-      <img src={image} alt="Lien cassé" />
-      <div className="content">
-        <div style={{ display: "flex" }}>
-          <h2>{data.TITR}</h2>
-          <span>{data.REF}</span>
-        </div>
-        <div>
-          <p>{data.DOMN.join(", ")}</p>
-          <p>{data.DENO.join(", ")}</p>
-          <p>{data.AUTR}</p>
-          <p>{data.PERI.join(", ")}</p>
-          <p>{data.LOCA}</p>
-          <p>{data.INV}</p>
-        </div>
-      </div>
-    </Link>
-  );
-};

@@ -8069,9 +8069,9 @@ polished@^1.9.3:
   integrity sha512-4NmSD7fMFlM8roNxs7YXPv7UFRbYzb0gufR5zBxJLRzY54+zFsavxBo6zsQzP9ep6Hh3pC2pTyrpSTBEaB6IkQ==
 
 pop-shared@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/pop-shared/-/pop-shared-0.5.0.tgz#becce8ce7fc3cf342024489791eb3488bcb5fbf5"
-  integrity sha512-aI42XbNL21bAvDebU3rfePkVhtPBQv0Cejb5bZWhPJ3qfNYfdrN2cm+wIy597MkgUgVe9Fc3hmQIyJWDKukeww==
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/pop-shared/-/pop-shared-0.5.3.tgz#5f7cbffa1e7a24274c002cb58a54791314dbdc1b"
+  integrity sha512-7aek9gyX8f8DZFskRdRO0KgeadjxEXSeB4A6gxLGlCz6IbesAlr8GIyItTfmb3FshH7JdjQVLlBB4KtqLXjLSw==
 
 popper.js@^1.12.9:
   version "1.14.3"

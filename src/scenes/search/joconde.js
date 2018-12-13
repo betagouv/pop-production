@@ -15,7 +15,6 @@ import { es_url, bucket_url } from "../../config.js";
 import Joconde from "../../entities/Joconde";
 import Header from "./components/Header"
 
-
 const FILTER = [
   "mainSearch",
   "domn",

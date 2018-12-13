@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import Header from "./scenes/header";
 
 import Home from "./scenes/home";
-import Search from "./scenes/search";
+import SimpleSearch from "./scenes/search/simple";
+import AdvancedSearch from "./scenes/search/advanced";
 import Notice from "./scenes/notice";
 import Admin from "./scenes/admin";
 import Import from "./scenes/import";
@@ -50,8 +51,14 @@ class PublicRoutes extends React.Component {
               hasResetPassword={this.props.hasResetPassword}
             />
             <RestrictedRoute
-              path={["/recherche/", "/recherche-avancee/"]}
-              component={Search}
+              path={"/recherche/"}
+              component={SimpleSearch}
+              isLoggedIn={this.props.isLoggedIn}
+              hasResetPassword={this.props.hasResetPassword}
+            />
+            <RestrictedRoute
+              path={"/recherche-avancee/"}
+              component={AdvancedSearch}
               isLoggedIn={this.props.isLoggedIn}
               hasResetPassword={this.props.hasResetPassword}
             />

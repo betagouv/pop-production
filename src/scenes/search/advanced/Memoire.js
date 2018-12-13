@@ -6,6 +6,7 @@ import QueryBuilder from "../components/QueryBuilder";
 import Memoire from "../../../entities/Memoire";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
+import { Mapping } from "pop-shared";
 import Card from "../components/MemoireCard";
 
 export default class Search extends React.Component {
@@ -27,7 +28,7 @@ export default class Search extends React.Component {
             <Row>
               <Col md={9}>
                 <QueryBuilder
-                  entity={Memoire}
+                  entity={Mapping.memoire}
                   componentId="advancedSearch"
                   autocomplete={false}
                 />
@@ -45,7 +46,7 @@ export default class Search extends React.Component {
                 className="ml-2"
                 onChange={e => this.setState({ sortKey: e.target.value })}
               >
-                {new Memoire({})._fields
+                {Object.keys(Mapping.memoire)
                   .filter(e => !["TICO", "TITR"].includes(e))
                   .map(e => (
                     <option key={e} value={e}>

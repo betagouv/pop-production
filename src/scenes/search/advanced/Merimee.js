@@ -2,10 +2,10 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
-import Merimee from "../../../entities/Merimee";
 import QueryBuilder from "../components/QueryBuilder";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
+import { Mapping } from "pop-shared";
 import Card from "../components/MerimeeCard";
 
 export default class Search extends React.Component {
@@ -27,7 +27,7 @@ export default class Search extends React.Component {
             <Row>
               <Col md={9}>
                 <QueryBuilder
-                  entity={Merimee}
+                  entity={Mapping.merimee}
                   componentId="advancedSearch"
                   autocomplete={false}
                 />
@@ -46,7 +46,7 @@ export default class Search extends React.Component {
                 className="ml-2"
                 onChange={e => this.setState({ sortKey: e.target.value })}
               >
-                {new Merimee({})._fields
+                {Object.keys(Mapping.merimee)
                   .filter(e => !["TICO", "TITR"].includes(e))
                   .map(e => (
                     <option key={e} value={e}>

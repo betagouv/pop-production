@@ -2,10 +2,10 @@ import React from "react";
 import { Row, Col, Container } from "reactstrap";
 import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
-import Palissy from "../../../entities/Palissy";
 import QueryBuilder from "../components/QueryBuilder";
 import { es_url } from "../../../config.js";
 import Header from "../components/Header";
+import { Mapping } from "pop-shared";
 import Card from "../components/PalissyCard";
 
 export default class Search extends React.Component {
@@ -26,7 +26,7 @@ export default class Search extends React.Component {
             <Row>
               <Col md={9}>
                 <QueryBuilder
-                  entity={Palissy}
+                  entity={Mapping.palissy}
                   componentId="advancedSearch"
                   autocomplete={false}
                 />
@@ -44,7 +44,7 @@ export default class Search extends React.Component {
                 className="ml-2"
                 onChange={e => this.setState({ sortKey: e.target.value })}
               >
-                {new Palissy({})._fields
+                {Object.keys(Mapping.palissy)
                   .filter(e => !["TICO", "TITR"].includes(e))
                   .map(e => (
                     <option key={e} value={e}>

@@ -4,8 +4,8 @@ import { ReactiveBase, ReactiveList } from "@appbaseio/reactivesearch";
 import ExportComponent from "../components/export";
 import QueryBuilder from "../components/QueryBuilder";
 import { es_url } from "../../../config.js";
-import Joconde from "../../../entities/Joconde";
 import Header from "../components/Header";
+import { Mapping } from "pop-shared";
 import Card from "../components/JocondeCard";
 
 export default class Search extends React.Component {
@@ -25,7 +25,7 @@ export default class Search extends React.Component {
           <div>
             <Row>
               <Col md={9}>
-                <QueryBuilder entity={Joconde} componentId="advancedSearch" />
+                <QueryBuilder entity={Mapping.joconde} componentId="advancedSearch" />
               </Col>
               <Col md={3}>
                 <ExportComponent
@@ -40,7 +40,7 @@ export default class Search extends React.Component {
                 className="ml-2"
                 onChange={e => this.setState({ sortKey: e.target.value })}
               >
-                {new Joconde({})._fields
+                {Object.keys(Mapping.joconde)
                   .filter(e => !["TICO", "TITR"].includes(e))
                   .map(e => (
                     <option key={e} value={e}>

@@ -11,7 +11,7 @@ import { MultiList } from "pop-shared";
 import ExportComponent from "../components/export";
 import { es_url, bucket_url } from "../../../config.js";
 import Header from "../components/Header";
-import Card from "../components/Merimee";
+import Card from "../components/MerimeeCard";
 
 const FILTER = [
   "mainSearch",

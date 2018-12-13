@@ -36,12 +36,13 @@ class TagsInput extends React.Component {
           const suggestions = values.map(e => ({ id: e.value, text: e.value }));
           this.setState({ suggestions });
         }
-      });
+      }).catch(error){
+        console.log('ERROR',error)
+      }
     }
   }
 
   render() {
-    console.log("SSSS", this.props.input);
     if (!Array.isArray(this.props.input.value)) {
       return (
         <div>

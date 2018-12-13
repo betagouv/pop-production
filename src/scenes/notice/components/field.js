@@ -179,9 +179,9 @@ export default class AbstractField extends React.Component {
     }
     return (
       <div style={styles.container}>
-        {label && (
+        {(label || name) && (
           <div style={styles.title} id={`Tooltip_${name}`}>
-            {`${label} (${name})`}
+            {label ? `${label} (${name})` : name}
           </div>
         )}
         <Tooltip
@@ -194,7 +194,7 @@ export default class AbstractField extends React.Component {
             })
           }
         >
-          {description}
+          {description || "En attente de description"}
         </Tooltip>
         {Comp}
       </div>

@@ -1,9 +1,10 @@
 import React from "react";
 import { Row, Col, Container, Button, Form } from "reactstrap";
-import { Link } from "react-router-dom";
 import { reduxForm } from "redux-form";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
+import { Mapping } from "pop-shared";
+
 
 import FieldInput from "./components/fieldInput.js";
 import FieldTags from "./components/fieldTags.js";

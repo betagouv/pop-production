@@ -330,7 +330,7 @@ const ValueSelector = ({ entity, onChange, value }) => {
   for (let key in entity) {
     choices.push(
       <option key={key} value={key}>
-        {entity[key].label || key}
+        {/*décommenter ca pour afficher les labels {entity[key].label || */ key}
       </option>
     );
   }

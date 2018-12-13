@@ -2,57 +2,57 @@ import React from "react";
 import Autocomplete from "react-autocomplete";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
 
-function getQuery(valueSelected, actionSelected, resultSelected) {
-  if (actionSelected === "<>") {
+function getQuery(key, operator, value) {
+  if (operator === "<>") {
     // { value: "<>", text: "exist" },
     return {
       bool: {
         // Must exists ...
-        must: { exists: { field: valueSelected } },
+        must: { exists: { field: key } },
         // ... and must be not empty.
-        must_not: { term: { [`${valueSelected}.keyword`]: "" } }
+        must_not: { term: { [`${key}.keyword`]: "" } }
       }
     };
-  } else if (actionSelected === "><") {
+  } else if (operator === "><") {
     // { value: "><", text: "n'existe pas" }
     return {
       bool: {
         // Should be ...
         should: [
           // ... empty string ...
-          { term: { [`${valueSelected}.keyword`]: "" } },
+          { term: { [`${key}.keyword`]: "" } },
           // ... or not exists.
-          { bool: { must_not: { exists: { field: valueSelected } } } }
+          { bool: { must_not: { exists: { field: key } } } }
         ]
       }
     };
-  } else if (actionSelected === "==" && resultSelected) {
+  } else if (operator === "==" && value) {
     // { value: "==", text: "égal à" },
-    return { term: { [`${valueSelected}.keyword`]: resultSelected } };
-  } else if (actionSelected === "!=" && resultSelected) {
+    return { term: { [`${key}.keyword`]: value } };
+  } else if (operator === "!=" && value) {
     // { value: "!=", text: "différent de" },
     return {
-      must_not: { term: { [`${valueSelected}.keyword`]: resultSelected } }
+      must_not: { term: { [`${key}.keyword`]: value } }
     };
-  } else if (actionSelected === ">=" && resultSelected) {
+  } else if (operator === ">=" && value) {
     // { value: ">=", text: "supérieur ou égal à" },
-    return { range: { [`${valueSelected}.keyword`]: { gte: resultSelected } } };
-  } else if (actionSelected === "<=" && resultSelected) {
+    return { range: { [`${key}.keyword`]: { gte: value } } };
+  } else if (operator === "<=" && value) {
     // { value: "<=", text: "inférieur ou égal à" },
-    return { range: { [`${valueSelected}.keyword`]: { lte: resultSelected } } };
-  } else if (actionSelected === "<" && resultSelected) {
+    return { range: { [`${key}.keyword`]: { lte: value } } };
+  } else if (operator === "<" && value) {
     // { value: "<", text: "strictement inférieur à" },
-    return { range: { [`${valueSelected}.keyword`]: { lt: resultSelected } } };
-  } else if (actionSelected === ">" && resultSelected) {
+    return { range: { [`${key}.keyword`]: { lt: value } } };
+  } else if (operator === ">" && value) {
     // { value: ">", text: "strictement supérieur à" },
-    return { range: { [`${valueSelected}.keyword`]: { gt: resultSelected } } };
-  } else if (actionSelected === "^" && resultSelected) {
+    return { range: { [`${key}.keyword`]: { gt: value } } };
+  } else if (operator === "^" && value) {
     // { value: "^", text: "commence par" }
-    return { wildcard: { [`${valueSelected}.keyword`]: `${resultSelected}*` } };
-  } else if (actionSelected === "*" && resultSelected) {
+    return { wildcard: { [`${key}.keyword`]: `${value}*` } };
+  } else if (operator === "*" && value) {
     // { value: "*", text: "contient" }
     return {
-      wildcard: { [`${valueSelected}.keyword`]: `*${resultSelected}*` }
+      wildcard: { [`${key}.keyword`]: `*${value}*` }
     };
   } else {
     return null;
@@ -64,16 +64,17 @@ export default class RuleComponent extends React.Component {
     query: {}
   };
 
-  onUpdate(combinator, valueSelected, actionSelected, resultSelected) {
-    if (valueSelected) {
-      const query = `{"aggs": {"${valueSelected}.keyword": {"terms": {"field": "${valueSelected}.keyword","include" : ".*${resultSelected}.*","order": {"_count": "desc"},"size": 10}}}}`;
+  onUpdate(data) {
+    const {combinator, key, operator, value} = data;
+    if (key) {
+      const query = `{"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}}`;
       this.setState({ query: JSON.parse(query) });
     } else {
       this.setState({ query: {} });
     }
-    const query = getQuery(valueSelected, actionSelected, resultSelected);
+    const query = getQuery(key, operator, value);
     if (query) {
-      this.props.onUpdate({ id: this.props.id, query, combinator });
+      this.props.onUpdate({ id: this.props.id, query, combinator, data });
     }
   }
 
@@ -111,13 +112,13 @@ class Rule extends React.Component {
   }
 
   update() {
-    const { valueSelected, actionSelected, resultSelected } = this.state;
-    this.props.onUpdate(
-      this.state.combinator,
-      valueSelected,
-      actionSelected,
-      resultSelected
-    );
+    const { combinator, valueSelected, actionSelected, resultSelected } = this.state;
+    this.props.onUpdate({
+      combinator,
+      key: valueSelected,
+      operator: actionSelected,
+      value: resultSelected
+    });
   }
 
   render() {

@@ -157,33 +157,35 @@ export default class AbstractField extends React.Component {
     tooltipOpen: false
   };
   render() {
-    const { label, type, name, description, ...rest } = this.props;
+    const { label, type, name, description, disabled, thesaurus } = this.props;
     let Comp = <div />;
     if (type === "String") {
       Comp = (
         <Field
           component={({ ...d }) => <CustomInput {...d} />}
-          {...rest}
+          disabled={disabled}
           name={name}
+          thesaurus={thesaurus}
         />
       );
     } else if (type === "Array") {
       Comp = (
         <Field
           component={({ ...d }) => <TagsInput {...d} />}
-          {...rest}
           name={name}
+          disabled={disabled}
+          thesaurus={thesaurus}
         />
       );
     }
     return (
-      <div style={styles.container}>
+      <div className="field">
         {(label || name) && (
           <div style={styles.title} id={`Tooltip_${name}`}>
             {label ? `${label} (${name})` : name}
           </div>
         )}
-        <Tooltip
+        {/* <Tooltip
           placement="right"
           isOpen={this.state.tooltipOpen}
           target={`Tooltip_${name}`}
@@ -194,7 +196,7 @@ export default class AbstractField extends React.Component {
           }
         >
           {description || "En attente de description"}
-        </Tooltip>
+        </Tooltip> */}
         {Comp}
       </div>
     );
@@ -202,19 +204,5 @@ export default class AbstractField extends React.Component {
 }
 
 const styles = {
-  container: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "start",
-    alignItems: "start",
-    paddingTop: "0px",
-    paddingBottom: "0px"
-  },
-  title: {
-    paddingRight: "15px",
-    minWidth: "100px",
-    color: "#5a5a5a",
-    fontStyle: "italic"
-  }
+  title: {}
 };

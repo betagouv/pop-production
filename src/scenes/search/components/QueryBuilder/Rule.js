@@ -1,62 +1,12 @@
 import React from "react";
 import Autocomplete from "react-autocomplete";
 import { ReactiveComponent } from "@appbaseio/reactivesearch";
+import ruleQuery from "./ruleQuery";
 
-function getQuery(key, operator, value) {
-  if (operator === "<>") {
-    // { value: "<>", text: "exist" },
-    return {
-      bool: {
-        // Must exists ...
-        must: { exists: { field: key } },
-        // ... and must be not empty.
-        must_not: { term: { [`${key}.keyword`]: "" } }
-      }
-    };
-  } else if (operator === "><") {
-    // { value: "><", text: "n'existe pas" }
-    return {
-      bool: {
-        // Should be ...
-        should: [
-          // ... empty string ...
-          { term: { [`${key}.keyword`]: "" } },
-          // ... or not exists.
-          { bool: { must_not: { exists: { field: key } } } }
-        ]
-      }
-    };
-  } else if (operator === "==" && value) {
-    // { value: "==", text: "égal à" },
-    return { term: { [`${key}.keyword`]: value } };
-  } else if (operator === "!=" && value) {
-    // { value: "!=", text: "différent de" },
-    return {
-      must_not: { term: { [`${key}.keyword`]: value } }
-    };
-  } else if (operator === ">=" && value) {
-    // { value: ">=", text: "supérieur ou égal à" },
-    return { range: { [`${key}.keyword`]: { gte: value } } };
-  } else if (operator === "<=" && value) {
-    // { value: "<=", text: "inférieur ou égal à" },
-    return { range: { [`${key}.keyword`]: { lte: value } } };
-  } else if (operator === "<" && value) {
-    // { value: "<", text: "strictement inférieur à" },
-    return { range: { [`${key}.keyword`]: { lt: value } } };
-  } else if (operator === ">" && value) {
-    // { value: ">", text: "strictement supérieur à" },
-    return { range: { [`${key}.keyword`]: { gt: value } } };
-  } else if (operator === "^" && value) {
-    // { value: "^", text: "commence par" }
-    return { wildcard: { [`${key}.keyword`]: `${value}*` } };
-  } else if (operator === "*" && value) {
-    // { value: "*", text: "contient" }
-    return {
-      wildcard: { [`${key}.keyword`]: `*${value}*` }
-    };
-  } else {
-    return null;
-  }
+function sortObjectByKeys(o) {
+  return Object.keys(o)
+    .sort()
+    .reduce((r, k) => ((r[k] = o[k]), r), {});
 }
 
 export default class RuleComponent extends React.Component {
@@ -65,14 +15,14 @@ export default class RuleComponent extends React.Component {
   };
 
   onUpdate(data) {
-    const {combinator, key, operator, value} = data;
+    const { combinator, key, operator, value } = data;
     if (key) {
       const query = `{"aggs": {"${key}.keyword": {"terms": {"field": "${key}.keyword","include" : ".*${value}.*","order": {"_count": "desc"},"size": 10}}}}`;
       this.setState({ query: JSON.parse(query) });
     } else {
       this.setState({ query: {} });
     }
-    const query = getQuery(key, operator, value);
+    const query = ruleQuery(key, operator, value);
     if (query) {
       this.props.onUpdate({ id: this.props.id, query, combinator, data });
     }
@@ -87,6 +37,7 @@ export default class RuleComponent extends React.Component {
         <Rule
           first={this.props.first}
           id={this.props.id}
+          data={this.props.data}
           onRemove={this.props.onRemove}
           onUpdate={this.onUpdate.bind(this)}
           autocomplete={this.props.autocomplete}
@@ -100,12 +51,11 @@ export default class RuleComponent extends React.Component {
 class Rule extends React.Component {
   constructor(props) {
     super(props);
-    console.log("this.props.entity", this.props.entity);
     this.state = {
-      valueSelected: this.props.entity.REF.label,
-      actionSelected: "==",
-      resultSelected: "",
-      combinator: "ET"
+      valueSelected: this.props.data.key || "REF",
+      actionSelected: this.props.data.operator || "==",
+      resultSelected: this.props.data.value || "",
+      combinator: this.props.data.combinator || "ET"
     };
   }
   componentDidMount() {
@@ -113,7 +63,12 @@ class Rule extends React.Component {
   }
 
   update() {
-    const { combinator, valueSelected, actionSelected, resultSelected } = this.state;
+    const {
+      combinator,
+      valueSelected,
+      actionSelected,
+      resultSelected
+    } = this.state;
     this.props.onUpdate({
       combinator,
       key: valueSelected,
@@ -328,7 +283,7 @@ const ActionElement = ({ onChange, value }) => {
 
 const ValueSelector = ({ entity, onChange, value }) => {
   const choices = [];
-  for (let key in entity) {
+  for (let key in sortObjectByKeys(entity)) {
     choices.push(
       <option key={key} value={key}>
         {/*décommenter ca pour afficher les labels {entity[key].label || */ key}

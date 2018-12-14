@@ -2,66 +2,10 @@ import React from "react";
 import Rule from "./Rule";
 import { history } from "../../../../redux/store";
 import qs from "qs";
+import ruleQuery from "./ruleQuery";
 
-function gnagna(key, operator, value) {
-  if (operator === "<>") {
-    // { value: "<>", text: "exist" },
-    return {
-      bool: {
-        // Must exists ...
-        must: { exists: { field: key } },
-        // ... and must be not empty.
-        must_not: { term: { [`${key}.keyword`]: "" } }
-      }
-    };
-  } else if (operator === "><") {
-    // { value: "><", text: "n'existe pas" }
-    return {
-      bool: {
-        // Should be ...
-        should: [
-          // ... empty string ...
-          { term: { [`${key}.keyword`]: "" } },
-          // ... or not exists.
-          { bool: { must_not: { exists: { field: key } } } }
-        ]
-      }
-    };
-  } else if (operator === "==" && value) {
-    // { value: "==", text: "égal à" },
-    return { term: { [`${key}.keyword`]: value } };
-  } else if (operator === "!=" && value) {
-    // { value: "!=", text: "différent de" },
-    return {
-      must_not: { term: { [`${key}.keyword`]: value } }
-    };
-  } else if (operator === ">=" && value) {
-    // { value: ">=", text: "supérieur ou égal à" },
-    return { range: { [`${key}.keyword`]: { gte: value } } };
-  } else if (operator === "<=" && value) {
-    // { value: "<=", text: "inférieur ou égal à" },
-    return { range: { [`${key}.keyword`]: { lte: value } } };
-  } else if (operator === "<" && value) {
-    // { value: "<", text: "strictement inférieur à" },
-    return { range: { [`${key}.keyword`]: { lt: value } } };
-  } else if (operator === ">" && value) {
-    // { value: ">", text: "strictement supérieur à" },
-    return { range: { [`${key}.keyword`]: { gt: value } } };
-  } else if (operator === "^" && value) {
-    // { value: "^", text: "commence par" }
-    return { wildcard: { [`${key}.keyword`]: `${value}*` } };
-  } else if (operator === "*" && value) {
-    // { value: "*", text: "contient" }
-    return {
-      wildcard: { [`${key}.keyword`]: `*${value}*` }
-    };
-  } else {
-    return null;
-  }
-}
-
-//Fonction pour merger des requetes unitaires
-function getQuery(q) {
+// Merge unit queries
+function getMergedQueries(q) {
   let obj = {
     must: [],
     must_not: [],
@@ -69,7 +13,7 @@ function getQuery(q) {
     should_not: []
   };
   for (let i = 0; i < q.length; i++) {
-    //ALGO UN PEU CON ....
+    // This algo could be better ;)
     let combinator = "ET";
     if (i === 0) {
       if (q.length === 1) {
@@ -87,8 +31,6 @@ function getQuery(q) {
       obj.should.push(q[i].query);
     }
   }
-
-  history.replace("?" + qs.stringify({ q: q.map(e => e.data) }));
   return obj;
 }
 
@@ -99,6 +41,25 @@ export default class RuleGroup extends React.Component {
       queries: []
     };
   }
+
+  updateStateQueries = queries => {
+    this.setState({ queries }, () => {
+      this.updateUrlParams(queries);
+      this.props.onUpdate(getMergedQueries(queries));
+    });
+  };
+
+  updateUrlParams = q => {
+    const currentUrlParams = history.location.search;
+    const targetUrlParams = qs.stringify(
+      { q: q.map(e => e.data) },
+      { addQueryPrefix: true }
+    );
+    if (currentUrlParams !== targetUrlParams) {
+      history.replace(targetUrlParams);
+    }
+  };
+
   componentDidMount() {
     const search = qs.parse(history.location.search, {
       ignoreQueryPrefix: true
@@ -110,10 +71,10 @@ export default class RuleGroup extends React.Component {
           id: id++,
           data: s,
           combinator: s.combinator,
-          query: gnagna(s.key, s.operator, s.value)
+          query: ruleQuery(s.key, s.operator, s.value)
         };
       });
-      this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
+      this.updateStateQueries(queries);
     }
   }
 
@@ -126,7 +87,7 @@ export default class RuleGroup extends React.Component {
   onRemove(id) {
     let queries = this.state.queries.filter(e => e.id !== id);
     queries = queries.map((q, i) => ({ ...q, id: i }));
-    this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
+    this.updateStateQueries(queries);
   }
 
   onUpdate(obj) {
@@ -135,18 +96,17 @@ export default class RuleGroup extends React.Component {
       obj,
       ...this.state.queries.slice(obj.id + 1)
     ];
-    console.log(queries);
-    this.setState({ queries }, () => this.props.onUpdate(getQuery(queries)));
+    this.updateStateQueries(queries);
   }
 
   renderChildren() {
-    return this.state.queries.map(({ id }) => {
-      console.log("render" + id);
+    return this.state.queries.map(({ id, data }) => {
       return (
         <Rule
           autocomplete={this.props.autocomplete}
           key={id}
           id={id}
+          data={data || {}}
           onRemove={this.onRemove.bind(this)}
           onUpdate={this.onUpdate.bind(this)}
           entity={this.props.entity}

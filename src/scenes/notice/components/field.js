@@ -139,11 +139,11 @@ class CustomInput extends React.Component {
         <textarea
           ref={c => (this.textarea = c)}
           {...this.props}
-          value={this.props.input.value}
+          // value={this.props.input.value}
           onChange={e => {
             const str = String(e.target.value).replace("(c)", "©");
             this.handleInputChange();
-            this.props.input.onChange(str);
+            // this.props.input.onChange(str);
           }}
         />
         {this.renderSuggestion()}
@@ -158,11 +158,14 @@ export default class AbstractField extends React.Component {
   };
   render() {
     const { label, type, name, description, disabled, thesaurus } = this.props;
+
+    let desc = description || "En attente de description" + "\n";
+
     let Comp = <div />;
     if (type === "String") {
       Comp = (
         <Field
-          component={({ ...d }) => <CustomInput {...d} />}
+          component={CustomInput}
           disabled={disabled}
           name={name}
           thesaurus={thesaurus}
@@ -171,7 +174,7 @@ export default class AbstractField extends React.Component {
     } else if (type === "Array") {
       Comp = (
         <Field
-          component={({ ...d }) => <TagsInput {...d} />}
+          component={TagsInput}
           name={name}
           disabled={disabled}
           thesaurus={thesaurus}
@@ -185,7 +188,7 @@ export default class AbstractField extends React.Component {
             {label ? `${label} (${name})` : name}
           </div>
         )}
-        {/* <Tooltip
+        <Tooltip
           placement="right"
           isOpen={this.state.tooltipOpen}
           target={`Tooltip_${name}`}
@@ -195,8 +198,8 @@ export default class AbstractField extends React.Component {
             })
           }
         >
-          {description || "En attente de description"}
-        </Tooltip> */}
+          {desc}
+        </Tooltip>
         {Comp}
       </div>
     );

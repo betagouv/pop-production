@@ -42,7 +42,7 @@ class Notice extends React.Component {
     const { role, group } = this.props;
     const roles = ["producteur","administrateur"];
     const groups = ["mh","admin"];
-    const services = ["CRMH", "CAOA", "SAP", "SDAP"];
+    const services = ["CRMH", "CAOA", "SAP", "SDAP", "ETAT"];
     return services.includes(PRODUCTEUR) && groups.includes(group) && roles.includes(role);
   }
 

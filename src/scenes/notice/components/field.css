@@ -1,13 +1,13 @@
 /* Example Styles for React Tags*/
 
 .field {
-  width: "100%";
-  display: "flex";
-  flex-direction: "column";
-  justify-content: "start";
-  align-items: "start";
-  padding-top: "0px";
-  padding-bottom: "0px";
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .input textarea:disabled {

@@ -184,7 +184,6 @@ class Notice extends React.Component {
               <CustomField name="CATE" />
               <CustomField name="COMM" />
               <CustomField name="AFFE" />
-              <CustomField name="SPOL" />
             </Col>
           </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>

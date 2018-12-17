@@ -139,7 +139,6 @@ class Notice extends React.Component {
           >
             <Col sm={6}>
               <CustomField title="REF (REF) :" name="REF" disabled />
-              <CustomField name="REFMIS" disabled />
               <CustomField name="INV" />
               <CustomField name="DOMN" />
               <CustomField name="DENO" />

@@ -71,7 +71,7 @@ div.ReactTags__selected span.ReactTags__tag {
   font-size: 16px;
   display: inline-block;
   padding: 5px;
-  margin: 0 5px;
+  margin: 0 5px 5px 0;
   border-radius: 2px;
   color: #495057;
   border: 1px solid #ced4da;

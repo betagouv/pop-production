@@ -17,11 +17,13 @@ const FILTER = [
   "mainSearch",
   "domn",
   "deno",
-  "periode",
+  "peri",
   "image",
   "tech",
   "loca",
-  "autr"
+  "autr",
+  "util",
+  "epoq"
 ];
 
 export default class Search extends React.Component {
@@ -76,18 +78,6 @@ export default class Search extends React.Component {
                     and: FILTER
                   }}
                 />
-                <MultiList
-                  componentId="aptn"
-                  dataField="APTN.keyword"
-                  title="Ancien propriétaire"
-                  className="filters"
-                  displayCount
-                  sortByName={true}
-                  URLParams={true}
-                  react={{
-                    and: FILTER
-                  }}
-                />
 
                 <MultiList
                   componentId="deno"
@@ -102,7 +92,18 @@ export default class Search extends React.Component {
                 />
 
                 <MultiList
-                  componentId="periode"
+                  componentId="autr"
+                  dataField="AUTR.keyword"
+                  title="Auteurs"
+                  className="filters"
+                  displayCount
+                  URLParams={true}
+                  react={{
+                    and: FILTER
+                  }}
+                />
+                <MultiList
+                  componentId="peri"
                   dataField="PERI.keyword"
                   title="Période"
                   className="filters"
@@ -113,9 +114,20 @@ export default class Search extends React.Component {
                   }}
                 />
                 <MultiList
-                  componentId="image"
-                  dataField="CONTIENT_IMAGE.keyword"
-                  title="Contient une image"
+                  componentId="epoq"
+                  dataField="EPOQ.keyword"
+                  title="Epoque"
+                  className="filters"
+                  displayCount
+                  URLParams={true}
+                  react={{
+                    and: FILTER
+                  }}
+                />
+                <MultiList
+                  componentId="util"
+                  dataField="UTIL.keyword"
+                  title="Utilisation"
                   className="filters"
                   displayCount
                   URLParams={true}
@@ -147,11 +159,10 @@ export default class Search extends React.Component {
                     and: FILTER
                   }}
                 />
-
                 <MultiList
-                  componentId="autr"
-                  dataField="AUTR.keyword"
-                  title="Auteurs"
+                  componentId="image"
+                  dataField="CONTIENT_IMAGE.keyword"
+                  title="Contient une image"
                   className="filters"
                   displayCount
                   URLParams={true}

@@ -139,11 +139,11 @@ class CustomInput extends React.Component {
         <textarea
           ref={c => (this.textarea = c)}
           {...this.props}
-          // value={this.props.input.value}
+          value={this.props.input.value}
           onChange={e => {
             const str = String(e.target.value).replace("(c)", "©");
             this.handleInputChange();
-            // this.props.input.onChange(str);
+            this.props.input.onChange(str);
           }}
         />
         {this.renderSuggestion()}

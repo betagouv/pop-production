@@ -137,10 +137,8 @@ class Notice extends React.Component {
                 url="/notice/palissy/"
                 disabled={!this.state.editable}
               />
-              <CustomField name="ARCHEO" disabled={!this.state.editable} />
               <CustomField name="DENQ" disabled={!this.state.editable} />
               <CustomField name="COPY" disabled={!this.state.editable} />
-              <CustomField name="RFPA" disabled={!this.state.editable} />
               <CustomField name="DMAJ" disabled={!this.state.editable} />
               <CustomField name="DOMN" disabled={!this.state.editable} />
               <FieldLink
@@ -177,11 +175,8 @@ class Notice extends React.Component {
           >
             <Col sm={6}>
               <CustomField name="DENO" disabled={!this.state.editable} />
-              <CustomField name="GENR" disabled={!this.state.editable} />
               <CustomField name="PDEN" disabled={!this.state.editable} />
-              <CustomField name="VOCA" disabled={!this.state.editable} />
               <CustomField name="APPL" disabled={!this.state.editable} />
-              <CustomField name="ACTU" disabled={!this.state.editable} />
               <CustomField name="NART" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
@@ -193,7 +188,6 @@ class Notice extends React.Component {
                 url="/notice/palissy/"
                 disabled={!this.state.editable}
               />
-              <CustomField name="COLL" disabled={!this.state.editable} />
               <FieldLink
                 title="Référence de l’ensemble ou de l'oeuvre (REFE) : "
                 name="REFE"
@@ -222,12 +216,10 @@ class Notice extends React.Component {
               <CustomField name="EDIF" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <CustomField name="CADA" disabled={!this.state.editable} />
               <CustomField name="ZONE" disabled={!this.state.editable} />
               <CustomField name="COOR" disabled={!this.state.editable} />
               <CustomField name="COORM" disabled={!this.state.editable} />
               <CustomField name="IMPL" disabled={!this.state.editable} />
-              <CustomField name="HYDR" disabled={!this.state.editable} />
               <CustomField name="LOCA" disabled={!this.state.editable} />
               <CustomField name="EMPL" disabled={!this.state.editable} />
               <CustomField name="VOLS" disabled={!this.state.editable} />
@@ -251,8 +243,6 @@ class Notice extends React.Component {
             </Col>
             <Col sm={6}>
               <CustomField name="PERS" disabled={!this.state.editable} />
-
-              <CustomField name="REMP" disabled={!this.state.editable} />
               <CustomField name="DEPL" disabled={!this.state.editable} />
               <CustomField name="HIST" disabled={!this.state.editable} />
               <CustomField name="STAD" disabled={!this.state.editable} />
@@ -264,9 +254,6 @@ class Notice extends React.Component {
             color="#FBE367"
           >
             <Col sm={6}>
-              <CustomField name="PLAN" disabled={!this.state.editable} />
-              <CustomField name="ESCA" disabled={!this.state.editable} />
-              <CustomField name="VERT" disabled={!this.state.editable} />
               <CustomField name="REPR" disabled={!this.state.editable} />
               <CustomField name="PREP" disabled={!this.state.editable} />
               <CustomField name="CATE" disabled={!this.state.editable} />
@@ -276,7 +263,6 @@ class Notice extends React.Component {
             </Col>
             <Col sm={6}>
               <CustomField name="DIMS" disabled={!this.state.editable} />
-              <CustomField name="TYPO" disabled={!this.state.editable} />
               <CustomField name="ETAT" disabled={!this.state.editable} />
               <CustomField name="DESC" disabled={!this.state.editable} />
               <CustomField name="PARN" disabled={!this.state.editable} />
@@ -298,10 +284,7 @@ class Notice extends React.Component {
               <CustomField name="PPRO" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <CustomField name="MHPP" disabled={!this.state.editable} />
-              <CustomField name="SITE" disabled={!this.state.editable} />
               <CustomField name="INTE" disabled={!this.state.editable} />
-              <CustomField name="REMA" disabled={!this.state.editable} />
               <CustomField name="OBS" disabled={!this.state.editable} />
             </Col>
           </Section>
@@ -313,12 +296,8 @@ class Notice extends React.Component {
           >
             <Col sm={6}>
               <CustomField name="STAT" disabled={!this.state.editable} />
-              <CustomField name="PSTA" disabled={!this.state.editable} />
-              <CustomField name="AFFE" disabled={!this.state.editable} />
-              <CustomField name="DLAB" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <CustomField name="PAFF" disabled={!this.state.editable} />
             </Col>
           </Section>
           <div className="back" onClick={() => this.props.history.goBack()}>

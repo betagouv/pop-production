@@ -174,7 +174,6 @@ function ParseRenabl(files, xmlFiles, encoding) {
           notices.push(new Palissy(obj));
         } else if (tags[i].nodeName === "ILLUSTRATION") {
           const obj = RenablXMLToObj(tags[i]);
-          console.log('obj',obj)
           const EMET = tags[i].getAttribute("EMET");
           const NUMI = tags[i].getAttribute("NUMI");
           obj.REF = EMET + "_" + NUMI;

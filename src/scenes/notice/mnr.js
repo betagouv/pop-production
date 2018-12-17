@@ -35,7 +35,6 @@ class Notice extends React.Component {
   }
 
   load(ref) {
-    console.log("Load");
     this.setState({ loading: true });
     API.getNotice("mnr", ref)
       .then(notice => {

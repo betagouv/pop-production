@@ -7,7 +7,6 @@ import Joconde from "../../entities/Joconde";
 import utils from "./utils";
 
 class Import extends React.Component {
-
   parseFiles(files, encoding) {
     return new Promise((resolve, reject) => {
       var file = files.find(
@@ -17,7 +16,7 @@ class Import extends React.Component {
         reject("Fichier .txt absent");
         return;
       }
-  
+
       utils.readFile(file, encoding, res => {
         const importedNotices = utils
           .parseAjoutPilote(res, Joconde)
@@ -28,13 +27,13 @@ class Import extends React.Component {
             return value;
           })
           .map(value => new Joconde(value));
-  
+
         const filesMap = {};
         for (var i = 0; i < files.length; i++) {
           //Sometimes, name is the long name with museum code, sometimes its not... The easiest way I found was to transform long name to short name each time I get a file name
           filesMap[Joconde.convertLongNameToShort(files[i].name)] = files[i];
         }
-  
+
         //ADD IMAGES
         for (var i = 0; i < importedNotices.length; i++) {
           const names = importedNotices[i].IMG.value;
@@ -51,7 +50,7 @@ class Import extends React.Component {
             }
           }
         }
-  
+
         resolve({ importedNotices, fileNames: [file.name] });
       });
     });
@@ -74,7 +73,6 @@ class Import extends React.Component {
   }
 }
 
-
 const mapstatetoprops = ({ Auth }) => {
   const { museofile } = Auth.user;
   return {
@@ -86,7 +84,6 @@ export default connect(
   mapstatetoprops,
   {}
 )(Import);
-
 
 function report(notices, collection, email, institution) {
   const arr = [];

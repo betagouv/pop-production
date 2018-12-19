@@ -14,7 +14,7 @@ class Export {
     const fileName = `Import${base}_${year}${month}${date}_${hours}h${minutes}m${secondes}s.csv`;
 
     let csv = "";
-    const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"]; // ajout des colonnes ETAT(create, updated, rejected) et des info concernant des erreurs
+    const columns = [...fieldToExport.map(e => e.name), "Etat", "Details"]; // Add columns ETAT(create, updated, rejected) and informations about warning or errors
     csv += columns.join(",") + "\n";
 
     const created = notices.filter(e => e._status === "created");

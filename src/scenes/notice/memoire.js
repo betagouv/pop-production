@@ -37,10 +37,14 @@ class Notice extends React.Component {
 
   canUpdate(PRODUCTEUR) {
     const { role, group } = this.props;
-    const roles = ["producteur","administrateur"];
-    const groups = ["mh","admin"];
+    const roles = ["producteur", "administrateur"];
+    const groups = ["mh", "admin"];
     const services = ["CRMH", "CAOA", "SAP", "SDAP", "ETAT"];
-    return services.includes(PRODUCTEUR) && groups.includes(group) && roles.includes(role);
+    return (
+      services.includes(PRODUCTEUR) &&
+      groups.includes(group) &&
+      roles.includes(role)
+    );
   }
 
   load(ref) {
@@ -149,7 +153,11 @@ class Notice extends React.Component {
               <CustomField name="OBJT" disabled={!this.state.editable} />
             </Col>
             <Col sm={6}>
-              <CustomField name="LBASE" disabled={!this.state.editable} />
+              <CustomField
+                name="LBASE"
+                disabled={!this.state.editable}
+                urlRoot={`/notice/${findCollection(this.state.notice.REF)}`}
+              />
               <CustomField name="LBASE2" disabled={!this.state.editable} />
               <CustomField name="MARQ" disabled={!this.state.editable} />
             </Col>
@@ -373,6 +381,23 @@ class Notice extends React.Component {
   }
 }
 
+function findCollection(ref = "") {
+  console.log('REF',ref)
+  const prefix = ref.substring(0, 2);
+  console.log('prefix',prefix)
+  switch (prefix) {
+    case "EA":
+    case "PA":
+    case "IA":
+      return "merimee";
+    case "IM":
+    case "PM":
+      return "palissy";
+    default:
+    console.log('FUSH')
+      return "";
+  }
+}
 const CustomField = ({ name, ...rest }) => {
   return <Field {...Mapping.memoire[name]} name={name} {...rest} />;
 };

@@ -168,7 +168,7 @@ function regexIt(str) {
   return { terme: arr[2], champ: arr[1], thesaurus: arr[3] };
 }
 
-function parseFiles(files, encoding) {
+function parseFiles(files, encoding, options) {
   return new Promise((resolve, reject) => {
     var file = files.find(
       file => ("" + file.name.split(".").pop()).toLowerCase() === "txt"
@@ -181,6 +181,12 @@ function parseFiles(files, encoding) {
     utils.readFile(file, encoding, res => {
       const importedNotices = utils
         .parseAjoutPilote(res, Joconde)
+        .map(value => {
+          if (!value.MUSEO && options.museofile) {
+            value.MUSEO = options.museofile;
+          }
+          return value;
+        })
         .map(value => new Joconde(value));
 
       const filesMap = {};

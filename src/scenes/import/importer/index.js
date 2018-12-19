@@ -44,7 +44,8 @@ class Importer extends Component {
       //PARSE FILES
       let { importedNotices, fileNames } = await this.props.parseFiles(
         files,
-        encoding
+        encoding,
+        { museofile: this.props.museofile }
       );
 
       //RECUPERATION DES NOTICES EXISTANTES
@@ -474,10 +475,11 @@ class Importer extends Component {
 }
 
 const mapstatetoprops = ({ Auth }) => {
-  const { email, institution, _id } = Auth.user;
+  const { email, institution, _id, museofile } = Auth.user;
   return {
     email,
     institution,
+    museofile,
     userId: _id
   };
 };

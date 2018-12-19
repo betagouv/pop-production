@@ -141,7 +141,7 @@ export default class Memoire extends Notice {
       }
     }
 
-    ////////////////////////////Il y a moyen de énormément mutualiser ce fichier, les tests & co avec le mapping. Mais on le fera après le MVP
+    ////////////////////////////We can mutualise this code to all notice. Must be done after the MVP
     const memoireMapping = Mapping.memoire;
     for (let key in memoireMapping) {
       if (memoireMapping[key].validation && this[key]) {

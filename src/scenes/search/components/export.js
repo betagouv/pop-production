@@ -117,7 +117,7 @@ async function exportData(fileName, entities) {
     });
     // Transform the whole queries into readable text.
     const queryAsText = queries
-      .join(", ")
+      .join(" ")
       .replace(/"/g, '""')
       .replace(/^(et|ou) /, "");
     // Ads this text on first line

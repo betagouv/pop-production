@@ -6,6 +6,8 @@ export default class Memoire extends Notice {
   constructor(body) {
     super();
     this._type = "memoire";
+
+
     this.setProperty("REF", "String", (body.REF || "").trim(), {
       required: true
     });
@@ -137,26 +139,6 @@ export default class Memoire extends Notice {
       ) {
         if (this[property].required && !this[property].value) {
           this._errors.push(`Le champ ${property} ne doit pas être vide`);
-        }
-      }
-    }
-
-    ////////////////////////////We can mutualise this code to all notice. Must be done after the MVP
-    const memoireMapping = Mapping.memoire;
-    for (let key in memoireMapping) {
-      if (memoireMapping[key].validation && this[key] && this[key].value) {
-        let validate = true;
-        switch (memoireMapping[key].validation) {
-          case "Alphanumeric":
-            validate = validator.isAlphanumeric(this[key].value, "fr-FR");
-            break;
-          default:
-            console.log("TODO", memoireMapping[key].validation);
-            break;
-        }
-
-        if(!validate){
-          this._errors.push(`Le champ ${key} avec la valeur "${this[key].value}" n'est pas de type ${memoireMapping[key].validation}`)
         }
       }
     }

@@ -1,18 +1,53 @@
+import { Mapping } from "pop-shared";
+import validator from "validator";
+
 export default class Notice {
-  constructor() {
+  constructor(body, collection) {
     this._errors = [];
     this._messages = [];
     this._warnings = [];
     this._images = [];
-    this._type = "";
-    this._fields = [];
+    this._type = collection;
+    this._mapping = Mapping[collection];
     this.POP_IMPORT = { value: [] };
+
+    for (let key in this._mapping) {
+      if (body[key] !== undefined) {
+        if (this._mapping[key].type === "Array") {
+          this[key] = this.extractArray(body[key]);
+        } else {
+          this[key] = body[key];
+        }
+      }
+    }
+    console.log(this)
+  }
+
+  validate() {
+    for (let key in this._mapping) {
+      if (this._mapping[key].validation && this[key] && this[key].value) {
+        let validate = true;
+        switch (this._mapping[key].validation) {
+          case "Alphanumeric":
+            validate = validator.isAlphanumeric(this[key].value, "fr-FR");
+            break;
+          default:
+            console.log("TODO", this._mapping[key].validation);
+            break;
+        }
+
+        if (!validate) {
+          this._errors.push(
+            `Le champ ${key} avec la valeur "${
+              this[key].value
+            }" n'est pas de type ${this._mapping[key].validation}`
+          );
+        }
+      }
+    }
   }
 
   setProperty(property, type, value, opt = null) {
-    // in order to know which properties compose an entity
-    this._fields.push(property);
-
     //if there is a value, add it. Otherwise I dont want to overwrite a value if there is nothing
     if (value !== undefined && value !== null) {
       this[property] = { type, value }; // The type is used in order to check if the value is different from the production. I need the type

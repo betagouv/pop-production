@@ -56,10 +56,7 @@ class Importer extends Component {
           progress: Math.floor((i * 100) / (importedNotices.length * 2))
         });
         const collection = importedNotices[i]._type;
-        const notice = await api.getNotice(
-          collection,
-          importedNotices[i].REF.value
-        );
+        const notice = await api.getNotice(collection, importedNotices[i].REF);
         if (notice) {
           existingNotices.push(notice);
         }

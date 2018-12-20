@@ -20,11 +20,16 @@ export default class Notice {
         }
       }
     }
-    console.log(this)
   }
 
   validate() {
     for (let key in this._mapping) {
+      //Check required fields
+      if (this._mapping[key].required && !body[key]) {
+        this._errors.push(`Le champ ${key} ne doit pas être vide`);
+      }
+
+      //check format
       if (this._mapping[key].validation && this[key] && this[key].value) {
         let validate = true;
         switch (this._mapping[key].validation) {
@@ -63,11 +68,10 @@ export default class Notice {
       if (
         this.hasOwnProperty(property) &&
         property.indexOf("_") !== 0 &&
-        typeof this[property] === "object"
+        typeof this[property] !== "function" &&
+        !this._mapping[property].generated
       ) {
-        if (!this[property].generated) {
-          flat[property] = this[property].value;
-        }
+        flat[property] = this[property];
       }
     }
     return flat;

@@ -32,9 +32,6 @@ export default class Joconde extends Notice {
       this._mapping[key].thesaurus_separator = obj[key];
     }
 
-    // This field is in the old format but its not imported in the one. But you need to track it in order to import joconde properly
-    //  For Ajout piloté,  sometime the file is broken and a new line doesn mean a new filed. To check all fileld and line, I'm checkiong if I know the field. If I dont know it,n its not a field.
-    // So I need to declare it if I want it te be considered as a field
   }
 
   extractIMGNames = function(str) {

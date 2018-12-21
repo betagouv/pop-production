@@ -11,6 +11,7 @@ export default class Notice {
     this._mapping = Mapping[collection];
     this.POP_IMPORT = { value: [] };
 
+    // Create entity
     for (let key in this._mapping) {
       if (body[key] !== undefined) {
         if (this._mapping[key].type === "Array") {
@@ -20,16 +21,15 @@ export default class Notice {
         }
       }
     }
-  }
 
-  validate() {
+    // Validate data
     for (let key in this._mapping) {
       //Check required fields
       if (this._mapping[key].required && !body[key]) {
         this._errors.push(`Le champ ${key} ne doit pas être vide`);
       }
 
-      //check format
+      //Check format
       if (this._mapping[key].validation && this[key] && this[key].value) {
         let validate = true;
         switch (this._mapping[key].validation) {
@@ -52,15 +52,6 @@ export default class Notice {
     }
   }
 
-  setProperty(property, type, value, opt = null) {
-    //if there is a value, add it. Otherwise I dont want to overwrite a value if there is nothing
-    if (value !== undefined && value !== null) {
-      this[property] = { type, value }; // The type is used in order to check if the value is different from the production. I need the type
-      if (opt) {
-        this[property] = { ...this[property], ...opt };
-      }
-    }
-  }
 
   makeItFlat = function() {
     let flat = {};

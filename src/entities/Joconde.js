@@ -32,6 +32,8 @@ export default class Joconde extends Notice {
       this._mapping[key].thesaurus_separator = obj[key];
     }
 
+    //REFMIS ?
+
   }
 
   extractIMGNames = function(str) {

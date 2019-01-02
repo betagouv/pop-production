@@ -15,6 +15,7 @@ export default class Import extends React.Component {
         <Importer
           collection="monuments-historiques"
           parseFiles={parseFiles}
+          readme={readme}
           dropzoneText={
             <div>
               Glissez & déposez vos fichiers au format MH ( extension .csv avec
@@ -117,4 +118,17 @@ function parseFiles(files, encoding) {
       resolve({ importedNotices, fileNames: [objectFile.name] });
     });
   });
+}
+
+function readme() {
+  return (
+    <div>
+      <h5>Plateforme Ouverte du Patrimoine</h5>
+      <p>
+        La plateforme POP regroupe les contenus numériques de patrimoine
+        français afin de les rendre accessibles et consultables au plus grand
+        nombre
+      </p>
+    </div>
+  );
 }

@@ -62,6 +62,7 @@ class Import extends React.Component {
           collection="joconde"
           parseFiles={this.parseFiles.bind(this)}
           report={report}
+          readme={readme}
           fieldsToExport={[
             { name: "Identifiant", key: "REF" },
             { name: "N° inventaire", key: "INV" }
@@ -217,4 +218,17 @@ function regexIt(str) {
   }
 
   return { terme: arr[2], champ: arr[1], thesaurus: arr[3] };
+}
+
+function readme() {
+  return (
+    <div>
+      <h5>Plateforme Ouverte du Patrimoine</h5>
+      <p>
+        La plateforme POP regroupe les contenus numériques de patrimoine
+        français afin de les rendre accessibles et consultables au plus grand
+        nombre
+      </p>
+    </div>
+  );
 }

@@ -14,6 +14,7 @@ export default class Import extends React.Component {
       <Container className="import">
         <Importer
           collection="inventaire"
+          readme={readme}
           parseFiles={parseFiles}
           dropzoneText="Glissez & déposez vos fichiers au format Renable (.xml) ou Gertrude (.txt à partir de la version 1.6) et les images associées (au format .jpg) dans cette zone"
           defaultEncoding="UTF-8"
@@ -243,4 +244,17 @@ function RenablXMLToObj(node) {
     }
   }
   return obj;
+}
+
+function readme() {
+  return (
+    <div>
+      <h5>Plateforme Ouverte du Patrimoine</h5>
+      <p>
+        La plateforme POP regroupe les contenus numériques de patrimoine
+        français afin de les rendre accessibles et consultables au plus grand
+        nombre
+      </p>
+    </div>
+  );
 }

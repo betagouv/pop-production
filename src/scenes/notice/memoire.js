@@ -266,6 +266,7 @@ class Notice extends React.Component {
             </Col>
             <Col sm={6}>
               <CustomField name="DATOR" disabled={!this.state.editable} />
+              <CustomField name="EXPO" disabled={!this.state.editable} />
             </Col>
           </Section>
 
@@ -360,13 +361,12 @@ class Notice extends React.Component {
           <div className="back" onClick={() => this.props.history.goBack()}>
             Retour
           </div>
-          {this.props.canUpdate ? (
+          {this.state.editable ? (
             <div className="buttons">
               <Button color="danger" onClick={() => this.delete()}>
                 Supprimer
               </Button>
               <Button
-                disabled={!this.state.editable}
                 color="primary"
                 type="submit"
               >

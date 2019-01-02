@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
-import Importer from "./importer";
 import { Mapping } from "pop-shared";
+import Importer from "./importer";
 import Memoire from "../../entities/Memoire";
 
 import utils from "./utils";
@@ -65,6 +65,12 @@ function readme() {
   const generatedFields = Object.keys(Mapping.memoire).filter(e => {
     return Mapping.memoire[e].master;
   });
+  const requiredFields = Object.keys(Mapping.memoire).filter(e => {
+    return Mapping.memoire[e].required;
+  });
+  const controlsFields = Object.keys(Mapping.memoire).filter(e => {
+    return Mapping.memoire[e].validation;
+  });
 
   return (
     <div>
@@ -75,7 +81,7 @@ function readme() {
         <h6>Formats d’import </h6>
         Les formats de données pris en charge sont les suivants : <br />
         <ul>
-          <li>texte : csv (séparateur : virgule, encodage : UTF8) et .ods</li>
+          <li>texte : .ods (Open Office Document SpeardSheet) </li>
           <li>illustration : jpg, png.</li>
         </ul>
         La taille maximale d’un import est de 300Mo (soit environ 3000 notices
@@ -83,8 +89,20 @@ function readme() {
         <h6>Champs obligatoires et contrôles de vocabulaire </h6>
         Les champs suivants doivent obligatoirement être renseignés : <br />
         <br />
-        REF (référence de la notice).
+        <ul>
+          {requiredFields.map(e => (
+            <li>{e}</li>
+          ))}
+        </ul>
         <br />
+        <h6>Test de validation des champs : </h6>
+        Les tests suivants sont effectués lors des imports : <br />
+        <br />
+        <ul>
+          {controlsFields.map(e => (
+            <li>{e} : {Mapping.memoire[e].validation}</li>
+          ))}
+        </ul>
         <br />
         <h5>Que voulez-vous faire ?</h5>
         <h6>Je veux créer une notice :</h6>

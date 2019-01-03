@@ -17,6 +17,10 @@ class Admin extends React.Component {
   fetchUsers = () => {
     this.setState({ loading: true });
     api.getUsers(this.props.group).then(users => {
+      // Sort by name, empty last. Source: https://stackoverflow.com/a/29829370/978690
+      users.sort((a, b) => {
+        return !a.nom - !b.nom || +(a.nom > b.nom) || -(a.nom < b.nom);
+      });
       this.setState({ users: users || [], loading: false });
     });
   };
@@ -30,8 +34,9 @@ class Admin extends React.Component {
       <Table>
         <thead>
           <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
             <th>Email</th>
-            <th>Prénom et nom</th>
             <th>Groupe</th>
             <th>Institution</th>
             <th>Role</th>
@@ -57,9 +62,14 @@ class Admin extends React.Component {
               : "jamais";
             return (
               <tr key={email}>
+                <td>{nom}</td>
+                <td>{prenom}</td>
                 <td className="admin-email">{email}</td>
-                <td>{prenom} {nom}</td>
-                <td>{group === 'joconde' && museofile ? `${group} ${museofile}` : group}</td>
+                <td>
+                  {group === "joconde" && museofile
+                    ? `${group} ${museofile}`
+                    : group}
+                </td>
                 <td>{institution}</td>
                 <td>{role}</td>
                 <td>{lastCo}</td>

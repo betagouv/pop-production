@@ -82,7 +82,7 @@ class request {
               if (data.success) {
                 resolve(data);
               } else {
-                reject(data.msg);
+                reject(data);
               }
             })
             .catch(e => {

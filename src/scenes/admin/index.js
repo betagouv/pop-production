@@ -17,10 +17,6 @@ class Admin extends React.Component {
   fetchUsers = () => {
     this.setState({ loading: true });
     api.getUsers(this.props.group).then(users => {
-      // Sort by name, empty last. Source: https://stackoverflow.com/a/29829370/978690
-      users.sort((a, b) => {
-        return !a.nom - !b.nom || +(a.nom > b.nom) || -(a.nom < b.nom);
-      });
       this.setState({ users: users || [], loading: false });
     });
   };
